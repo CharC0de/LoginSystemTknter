@@ -2,11 +2,12 @@ import tkinter as tk
 import mysql.connector
 import bcrypt
 
+
 conn = mysql.connector.connect(
   host="localhost",
   user="root",
   password="",
-  database="schooludbtest"
+  database="dbactivity4"
 )
 cursor = conn.cursor()
 root =tk.Tk()
@@ -54,11 +55,15 @@ def switch_to_second_window(event):
     
 regLnklbl.bind('<Button-1>',switch_to_second_window)
 
+
+
 def loginAcc():
-    sql = "SELECT * FROM `users` WHERE `username` = ?"
     userName=unameInp.get()
+    print(userName)
+    sql = "SELECT * FROM `tblusers` WHERE `username` = %s"
     cursor.execute(sql,(userName,))
     row=cursor.fetchone()
+    print(row is not None)
     if row is not None:  
         print(row[1].encode('utf-8'))
 
@@ -69,11 +74,14 @@ def loginAcc():
             unameInp.delete(0, tk.END)
             passInp.delete(0, tk.END)
             succLabel.config(text="Authorized Access", fg='green')
+            import Open
+            root.withdraw()
+            Open.root.deiconify()
         else:
             succLabel.config(text="Invalid user input", fg='red')
-  
     else:
         succLabel.config(text="Invalid user input", fg='red')
+    
         
 submitBtn.config(command=loginAcc)
 

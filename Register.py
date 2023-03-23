@@ -8,7 +8,7 @@ conn = mysql.connector.connect(
   host="localhost",
   user="root",
   password="",
-  database="schooludbtest"
+  database="dbactivity4"
 )
 cursor = conn.cursor()
 #--mySqlinit
@@ -72,7 +72,7 @@ def storeInps():
     userName=uNameInp.get()
     posVal=posList.get(tk.ACTIVE)
     if((passInp.get() == confpassInp.get()) and passInp.get()!=""):
-        sql = "INSERT INTO `users` (`username`, `password`, `userPosition`, `dataNum`) VALUES (?,?, ?, NULL)"
+        sql = "INSERT INTO `tblusers` (`username`, `password`, `userPosition`, `dataNum`) VALUES (%s,%s, %s, NULL)"
         cursor.execute(sql,(userName,passWord,posVal))
         conn.commit()
         print(userName)
